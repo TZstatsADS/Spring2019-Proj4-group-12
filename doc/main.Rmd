@@ -11,8 +11,6 @@ output:
     code_folding: hide
 ---
 
-Jing Wu
-
 GU4243/GR5243: Applied Data Science
 
 <style type="text/css">
@@ -111,20 +109,21 @@ The referenced papers are:
 In this statercode, we implement the first three rules in the first paper -- rule based techniques, as an example.
 
 ```{r}
-### only process one of the files in the folder as an example, in your project, you need to use all the files
-current_file_name <- sub(".txt","",file_name_vec[5])
+Error_detection <- function(i) #parameter is the index of the file
+{
+  current_file_name <- sub(".txt","",file_name_vec[i])
+  current_ground_truth_txt <- readLines(paste("../data/ground_truth/",current_file_name,".txt",sep=""), warn=FALSE)
+  current_tesseract_txt <- readLines(paste("../data/tesseract/",current_file_name,".txt",sep=""), warn=FALSE)
+  clean_tesseract_txt <- paste(current_tesseract_txt, collapse = " ")
+  tesseract_vec <- str_split(clean_tesseract_txt," ")[[1]]
+  tesseract_if_clean <- unlist(lapply(tesseract_vec,ifCleanToken))
+}
 
-## read the ground truth text
-current_ground_truth_txt <- readLines(paste("../data/ground_truth/",current_file_name,".txt",sep=""), warn=FALSE)
-
-## read the tesseract text
-current_tesseract_txt <- readLines(paste("../data/tesseract/",current_file_name,".txt",sep=""), warn=FALSE)
-clean_tesseract_txt <- paste(current_tesseract_txt, collapse = " ")
-
-## detect tesseract word error
-tesseract_vec <- str_split(clean_tesseract_txt," ")[[1]] #1124 tokens
-tesseract_if_clean <- unlist(lapply(tesseract_vec,ifCleanToken)) # source code of ifCleanToken in in lib folder
+detection_result <- mapply(Error_detection,1:length(file_name_vec))
+save(detection_result, file = '../output/detection_result.RData')
 ```
+
+
 
 # Step 4 - Error correction
 
