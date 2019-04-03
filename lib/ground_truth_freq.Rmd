@@ -1,0 +1,60 @@
+---
+title: "ground_truth_frquency"
+author: "Jingwen Wang"
+date: "4/3/2019"
+output: html_document
+---
+
+### Step 1 - Load library and source code
+```{r, warning=FALSE, message = FALSE}
+if (!require("devtools")) install.packages("devtools")
+if (!require("pacman")) {
+  ## devtools is required
+  library(devtools)
+  install_github("trinker/pacman")
+}
+
+pacman::p_load(knitr, readr, stringr, tesseract, vecsets)
+source('../lib/ifCleanToken.R')
+file_name_vec <- list.files("../data/ground_truth") #100 files in total
+```
+
+```{r num_line_check}
+# Get locations of all files
+## ground_truth
+gt_ln_vec <- sapply(file_name_vec, line_num_g)
+## tesseract
+tes_ln_vec <- sapply(file_name_vec, line_num_t)
+
+# Different Docs
+doc_diff <- file_name_vec[gt_ln_vec!=tes_ln_vec] # 13 documents have different lines
+```
+
+###Step 2: Term Frequency
+```{r}
+# Calculate All word frequency in ground_truth files
+## Real all lines in ground_truth
+gd_all_lines <- c()
+for (i in 1:length(file_name_vec)){
+  current_file_name <- sub(".txt","",file_name_vec[i])
+  gd_lines <- readLines(paste("../data/ground_truth/",current_file_name,".txt",sep=""), warn=FALSE)
+  gd_all_lines <- paste(gd_lines,gd_all_lines)
+}
+save(gd_all_lines ,file = '../output/ground_truth_all_lines.RData')
+
+# Get the words from all ground_truth files
+gd_freq = function(doc){
+  doc<-tolower(doc) # consider only lower case
+  doc<-removeNumbers(doc) #consider words without numbers
+  doc<-removePunctuation(doc) #consider words without punctuation
+  freq <- termFreq(doc)
+  freq <- sort(unclass(freq),decreasing = T)
+  freq <- data.frame(tokens=names(freq),n=as.integer(freq))
+  freq$tokens <- reorder(freq$tokens,freq$n)
+  return(freq)
+}
+
+# All word frequency in ground_truth
+ground_truth_freq <- gd_freq(gd_all_lines)
+save(ground_truth_freq,file = '../output/ground_truth_frequency.RData')
+```
