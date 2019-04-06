@@ -109,6 +109,21 @@ The referenced papers are:
 In this statercode, we implement the first three rules in the first paper -- rule based techniques, as an example.
 
 ```{r}
+word_list <- function(i) #parameter is the index of the file
+{
+  current_file_name <- sub(".txt","",file_name_vec[i])
+  current_ground_truth_txt <- readLines(paste("../data/ground_truth/",current_file_name,".txt",sep=""), warn=FALSE)
+  current_tesseract_txt <- readLines(paste("../data/tesseract/",current_file_name,".txt",sep=""), warn=FALSE)
+  clean_tesseract_txt <- paste(current_tesseract_txt, collapse = " ")
+  tesseract_vec <- str_split(clean_tesseract_txt," ")[[1]]
+  return(tesseract_vec)
+}
+
+list <- mapply(word_list,1:length(file_name_vec))
+save(list, file = '../output/tesseract_vec.RData')
+```
+
+```{r}
 Error_detection <- function(i) #parameter is the index of the file
 {
   current_file_name <- sub(".txt","",file_name_vec[i])
@@ -117,11 +132,13 @@ Error_detection <- function(i) #parameter is the index of the file
   clean_tesseract_txt <- paste(current_tesseract_txt, collapse = " ")
   tesseract_vec <- str_split(clean_tesseract_txt," ")[[1]]
   tesseract_if_clean <- unlist(lapply(tesseract_vec,ifCleanToken))
+  return(tesseract_if_clean)
 }
 
 detection_result <- mapply(Error_detection,1:length(file_name_vec))
 save(detection_result, file = '../output/detection_result.RData')
 ```
+
 
 
 
