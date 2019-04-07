@@ -101,7 +101,7 @@ The referenced papers are:
 
 In this statercode, we implement the first three rules in the first paper -- rule based techniques, as an example.
 
-```{r}
+```{r eval=FALSE}
 # store the tesseract_vec into RData
 word_list <- function(i) #parameter is the index of the file
 {
@@ -113,11 +113,11 @@ word_list <- function(i) #parameter is the index of the file
   return(tesseract_vec)
 }
 
-list <- mapply(word_list,1:length(file_name_vec))
-save(list, file = '../output/tesseract_vec.RData')
+tesseract_vec <- mapply(word_list,1:length(file_name_vec))
+save(tesseract_vec, file = '../output/tesseract_vec.RData')
 ```
 
-```{r}
+```{r eval=FALSE}
 # Detect the error and return a true/false
 Error_detection <- function(i) #parameter is the index of the file
 {
@@ -146,6 +146,9 @@ The referenced papers are:
 
 ```{r}
 # For every typo, apply potential_correction function and for each candidate, compute the probability
+
+## Create a list that contains typo and position in tesseract_vec
+source('../output/typos.RData')
 
 
 
