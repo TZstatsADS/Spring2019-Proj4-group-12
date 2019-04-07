@@ -167,6 +167,8 @@ for(i in 1:nrow(typos))
   temp <- potential_correction(typos[i,1])
   candidates <- candidates%>%
     bind_rows(temp)
+  if(i%%50==0)
+  {print(i)}
 }
 # Note that some of the typos cannot find a meaningful(listed in the dictionary) correction.
 save(candidates,file='../output/candidates.RData')

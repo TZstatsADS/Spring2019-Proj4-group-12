@@ -1,10 +1,11 @@
 source("../output/ground_truth_frequency.RData")
 
-probability <- function(i,j,typo,correction)
+probability <- function(i,j,typo,correction,category)
 {
   # parameter explaination
   ## index of error word in tesseract_vec: i_th row, j_th column
   ## typo: the wrong word; correction: the potential correction word
+  ## category: the category of correction type -- i(nsertion), r(versal), s(ubstitution), d(eletion)
   
   # without context
   N <- sum(ground_truth_freq[,2])

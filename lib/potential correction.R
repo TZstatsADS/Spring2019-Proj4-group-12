@@ -14,6 +14,11 @@ potential_correction <- function(typo)
   typo <- tolower(typo)
   typo <- gsub('[[:punct:] ]+','',typo)
   typo_characters <- strsplit(typo, "")[[1]]
+  if(length(typo_characters) == 0)
+  {
+    return()
+  }
+  
   # insertion
   for(i in 1:length(typo_characters))
   {
