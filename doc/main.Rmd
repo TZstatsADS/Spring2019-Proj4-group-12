@@ -154,7 +154,7 @@ The referenced papers are:
 load('../output/typos.RData')
 
 ## For each typo, list the candidate
-load('../output/potential correction.R')
+source('../output/potential correction.R')
 
 candidates <- data.frame(typo=character(),
                            correction=character(),
