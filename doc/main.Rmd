@@ -148,8 +148,11 @@ The referenced papers are:
 # For every typo, apply potential_correction function and for each candidate, compute the probability
 
 ## Create a list that contains typo and position in tesseract_vec
+## This is done by ../lib/typo position.R
 source('../output/typos.RData')
 
+## For each typo, list the candidate
+source('../output/potential correction.R')
 
 
 

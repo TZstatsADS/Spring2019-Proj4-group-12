@@ -39,7 +39,8 @@ potential_correction <- function(typo)
   }
   
   # reversal
-  for(i in 1:(length(typo_characters)-1))
+  if(length(typo_characters)>1)
+  {for(i in 1:(length(typo_characters)-1))
   {
     correction <- typo_characters
     correction[i] <- typo_characters[i+1]
@@ -49,7 +50,7 @@ potential_correction <- function(typo)
     change <- paste(typo_characters[i:(i+1)],collapse = "")
     type <- "r"
     candidates[nrow(candidates)+1,] <- list(typo,correction,pos,change,type)
-  }
+  }}
   
   
   
