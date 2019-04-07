@@ -168,7 +168,7 @@ for(i in seq(1,nrow(typos),1000))
   j <- ifelse((i+1000-1)<=nrow(typos),i+1000-1,nrow(typos))
   for(k in i:j)
   {
-    temp <- potential_correction(typos[i,1])
+    temp <- potential_correction(typos[k,1])
     candidates <- candidates%>%
       bind_rows(temp)
   }
