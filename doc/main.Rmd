@@ -146,7 +146,7 @@ The referenced papers are:
 
 - focus on section 5
 
-```{r}
+```{r eval=FALSE}
 # For every typo, apply potential_correction function and for each candidate, compute the probability
 
 ## Create a list that contains typo and position in tesseract_vec
