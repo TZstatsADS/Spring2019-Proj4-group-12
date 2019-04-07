@@ -3,6 +3,7 @@ data(grady_augmented) # an english dictionary
 potential_correction <- function(typo)
 {
   # Input typo, output a list of potential correction
+  # Note that the typo will be lowercased and removed punctuations
   
   candidates <- data.frame(typo=character(),
                            correction=character(),
@@ -10,7 +11,8 @@ potential_correction <- function(typo)
                            change=character(),
                            type=character(),
                            stringsAsFactors=FALSE)
-  
+  typo <- tolower(typo)
+  typo <- gsub('[[:punct:] ]+','',typo)
   typo_characters <- strsplit(typo, "")[[1]]
   # insertion
   for(i in 1:length(typo_characters))

@@ -63,6 +63,7 @@ if (!require("pacman")) {
   install_github("trinker/pacman")
 }
 library(lexicon)
+library(dplyr)
 
 pacman::p_load(knitr, readr, stringr, tesseract, vecsets)
 source('../lib/ifCleanToken.R')
@@ -154,8 +155,21 @@ source('../output/typos.RData')
 ## For each typo, list the candidate
 source('../output/potential correction.R')
 
+candidates <- data.frame(typo=character(),
+                           correction=character(),
+                           pos=integer(),
+                           change=character(),
+                           type=character(),
+                           stringsAsFactors=FALSE)
 
-
+for(i in 1:nrow(typos))
+{
+  temp <- potential_correction(typos[i,1])
+  candidates <- candidates%>%
+    bind_rows(temp)
+}
+# Note that some of the typos cannot find a meaningful(listed in the dictionary) correction.
+save(candidates,file='../output/candidates.RData')
 ```
 
 # Step 5 - Performance measure
