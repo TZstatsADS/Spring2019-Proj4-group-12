@@ -64,6 +64,7 @@ if (!require("pacman")) {
 }
 library(lexicon)
 library(dplyr)
+library(plyr)
 
 pacman::p_load(knitr, readr, stringr, tesseract, vecsets)
 source('../lib/ifCleanToken.R')
@@ -150,10 +151,10 @@ The referenced papers are:
 
 ## Create a list that contains typo and position in tesseract_vec
 ## This is done by ../lib/typo position.R
-source('../output/typos.RData')
+load('../output/typos.RData')
 
 ## For each typo, list the candidate
-source('../output/potential correction.R')
+load('../output/potential correction.R')
 
 candidates <- data.frame(typo=character(),
                            correction=character(),
@@ -162,13 +163,16 @@ candidates <- data.frame(typo=character(),
                            type=character(),
                            stringsAsFactors=FALSE)
 
-for(i in 1:nrow(typos))
+for(i in seq(1,nrow(typos),1000))
 {
-  temp <- potential_correction(typos[i,1])
-  candidates <- candidates%>%
-    bind_rows(temp)
-  if(i%%50==0)
-  {print(i)}
+  j <- ifelse((i+1000-1)<=nrow(typos),i+1000-1,nrow(typos))
+  for(k in i:j)
+  {
+    temp <- potential_correction(typos[i,1])
+    candidates <- candidates%>%
+      bind_rows(temp)
+  }
+  print(i)
 }
 # Note that some of the typos cannot find a meaningful(listed in the dictionary) correction.
 save(candidates,file='../output/candidates.RData')
