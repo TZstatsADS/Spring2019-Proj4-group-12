@@ -1,0 +1,161 @@
+---
+title: "Error Correction without Context"
+output: html_notebook
+---
+
+# Step 1 - Load library and source code
+```{r, warning=FALSE, message = FALSE}
+if (!require("devtools")) install.packages("devtools")
+if (!require("topicmodels")) install.packages("topicmodels")
+if (!require("pacman")) {
+  ## devtools is required
+  library(devtools)
+  install_github("trinker/pacman")
+}
+# library(lexicon)
+library(topicmodels)
+library(dplyr)
+library(plyr)
+
+pacman::p_load(knitr, readr, stringr, tesseract, vecsets)
+source('../lib/ifCleanToken.R')
+file_name_vec <- list.files("../data/ground_truth") #100 files in total
+```
+
+# Step 2 - Error Correction (Without Context) By using AP dictionary + Consufion Matrix in Data
+```{r}
+## Step 0: Loading Required Pakages
+if (!require("tm")) install.packages("tm")
+if (!require("dplyr")) install.packages("dplyr")
+if (!require("tidytext")) install.packages("tidytext")
+```
+
+In order to apply the confusion matrix associated with the assigned paper, we are going to use the same dictionary `Associated Press` (contained in `topicmodels` package in R) to
+```{r}
+## Step1: Constructing Frequency Table From AP
+data("AssociatedPress")
+terms_ap <- data.frame(Terms(AssociatedPress))
+colnames(terms_ap) <- "words"
+
+## Count Overall Frequency in AP
+tidy_ap <- tidy(AssociatedPress)
+ap_freq <- tidy_ap %>% group_by(term) %>% dplyr::summarise(sum(count))
+head(ap_freq,15)
+```
+
+```{r}
+## Step 2: Find the Frequency of Single Character and the Consecutive Two Letters
+chars <- array(0, dim=c(27,26))
+for(i in 1:nrow(ap_freq)){
+  string <- ap_freq$term[i]
+  count <- ap_freq$`sum(count)`[i]
+  head <- substring(string,1,1)
+  chars[27,which(letters==head)] =  chars[27,which(letters==head)] + count
+  for (s in 2:nchar(string)) {
+    x = substring(string,s-1, s-1)
+    y = substring(string, s, s)
+    row = which(letters==x)
+    col = which(letters==y)
+    chars[row, col] = chars[row, col] + count
+  }
+}
+# Adding names to the character matrix
+# Explanation: the character matrix captures the frequency of a pair of letter showing up in the AP dictionary
+# the last row counts the frequency of a single letter
+colnames(chars)<-letters
+rownames(chars)<-c(letters,"@")
+chars
+```
+
+
+```{r,warning=FALSE}  
+## Step 3: Importing the Confusion Matrix
+source('../lib/potential correction ap.R')
+m_add <- read_csv("../data/confusion_matrix/add_matrix.csv") %>% select(2:27)
+m_del <- read_csv("../data/confusion_matrix/del_matrix.csv") %>% select(2:27)
+m_rev <- read_csv("../data/confusion_matrix/rev_matrix.csv") %>% select(2:27)
+m_sub <- read_csv("../data/confusion_matrix/sub_matrix.csv") %>% select(2:27)
+
+## Step 4: Conditional Probability Calculation
+add_prob <- function(x, y){
+  idx_x <- ifelse(x %in% letters, which(letters==x), 27)
+  idx_y <- which(letters==y)
+  return(m_add[idx_x, idx_y]/sum(chars[idx_x,]))
+}
+
+del_prob <- function(x, y){
+  idx_x <- ifelse(x %in% letters, which(letters==x), 27)
+  idx_y <- which(letters==y)
+  return(m_del[idx_x, idx_y]/chars[idx_x, idx_y])
+}
+
+rev_prob <- function(x, y){
+  idx_x <- which(letters==x)
+  idx_y <- which(letters==y)
+  return(m_rev[idx_x, idx_y]/chars[idx_x, idx_y])
+}
+
+sub_prob <- function(x, y){
+  idx_x <- which(letters==x)
+  idx_y <- which(letters==y)
+  return(m_sub[idx_x, idx_y]/sum(chars[,idx_y]))
+}
+
+## Step 5: Calculate the Prior: pr(c)
+### this is the probability of the correct word appearing in the AP dictionary 
+prior <- function(c){
+  S <- sum(ap_freq$`sum(count)`)
+  count <- ifelse(c %in% ap_freq$term,ap_freq[which(ap_freq$term==c),]$`sum(count)`,0)
+  return(count/S)
+}
+```
+
+```{r}
+## Step 6: Calculate the conditional (error) probability
+candidate_scoring <- function(typo){
+  # Input: the wrong word
+  # Output: a data frame contains:
+  ## - typo: the wrong word typed in
+  ## - correction: possible corrections
+  ## - pc: prior probability
+  ## - ptc: error probability
+  list_cand <- potential_correction(typo)
+  correction <- c()
+  scr <- c()
+  pc <- c()
+  for (i in 1:nrow(list_cand)) {
+    cor <- list_cand[i,]$correction
+    typ <- list_cand[i,]$type
+    t <- list_cand[i,]$typo
+    pos <- list_cand[i,]$pos
+    chn <- list_cand[i,]$change
+    
+    if(typ=='i'){
+      s <- as.numeric(ifelse(pos==0, add_prob(NA, chn), add_prob(substring(cor, pos, pos), chn)))
+    }
+    
+    if(typ=='d'){
+      s <- as.numeric(ifelse(pos==0, del_prob(NA, chn), del_prob(substring(cor, pos, pos), chn)))
+    }
+    
+    if(typ=='s'){
+      s <- as.numeric(sub_prob(substring(t, pos+1, pos+1), chn))
+    }
+    
+    if(typ=='r'){
+      s <- as.numeric(rev_prob(substring(cor, pos+1, pos+1), substring(cor, pos+2, pos+2)))
+    }
+    
+    pr <- prior(cor)
+    
+    correction <- c(correction, cor)
+    scr <- c(scr, s)
+    pc <- c(pc, pr)
+  }
+  rk <- data.frame(typo = rep(typo, nrow(list_cand)), correction= correction, pc = pc, ptc = scr) %>% dplyr::arrange(desc(ptc))
+  return(rk)
+}
+
+## Example: acress
+candidate_scoring('acress')
+```
