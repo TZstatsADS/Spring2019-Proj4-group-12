@@ -146,6 +146,8 @@ The referenced papers are:
 
 - focus on section 5
 
+####Step 0: Generate Potential Candidates
+
 ```{r eval=FALSE}
 # For every typo, apply potential_correction function and for each candidate, compute the probability
 
@@ -172,10 +174,39 @@ for(i in seq(1,nrow(typos),1000))
     candidates <- candidates%>%
       bind_rows(temp)
   }
-  print(i)
+  print(i) # This helps to track the process
 }
 # Note that some of the typos cannot find a meaningful(listed in the dictionary) correction.
 save(candidates,file='../output/candidates.RData')
+```
+
+```{r}
+# To keep consistency, we also generated the candidate list that is outputed by using AP dictionary
+load('../output/typos.RData')
+## For each typo, list the candidate
+source('../lib/potential correction ap.R')
+
+candidates <- data.frame(typo=character(),
+                           correction=character(),
+                           pos=integer(),
+                           change=character(),
+                           type=character(),
+                           stringsAsFactors=FALSE)
+
+for(i in seq(1,nrow(typos),1000))
+{
+  j <- ifelse((i+1000-1)<=nrow(typos),i+1000-1,nrow(typos))
+  for(k in i:j)
+  {
+    temp <- potential_correction(typos[k,1])
+    candidates <- candidates%>%
+      bind_rows(temp)
+  }
+  # print(i) This is used to record the process
+}
+# Note that some of the typos cannot find a meaningful(listed in the dictionary) correction.
+candidates_ap <- candidates
+save(candidates_ap,file='../output/candidates_ap.RData') # possible correction by AP
 ```
 
 # Step 5 - Performance measure
