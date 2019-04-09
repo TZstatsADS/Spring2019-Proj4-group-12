@@ -90,6 +90,74 @@ for(i in c(1:length(file_name_vec))){
 }
 ```
 
+####Data Cleaning:
+
+Later, in order to develop the confusion matrix based on `ground_truth files` and to apply the precision measurement, we need to match `ground_truth` and `tesseract`.
+
+```{r}
+#set ground_truth file and tesseract file path
+ground_truth_path <- "../data/ground_truth_org/"
+tesseract_text_path <- "../data/tesseract_org/"
+unmatched_file_name <- array("",100)
+```
+
+```{r}
+# Detect if we have files in ground_truth and tesseract that are corresponding to each other but with different line numbers
+j <- 1
+for (i in c(1:length(file_name_vec))){
+  # find the length of each document
+  ground_truth_docu <- readLines(paste0(ground_truth_path,file_name_vec[i]), warn = FALSE, encoding = "UTF-8")
+  tesseract_text_docu <- readLines(paste0(tesseract_text_path,file_name_vec[i]), warn = FALSE, encoding = "UTF-8")
+  if (length(ground_truth_docu) != length(tesseract_text_docu)){
+    unmatched_file_name[j] <- file_name_vec[i]
+    j <- j + 1
+  }
+}
+
+# Number of files that have unmatched lines
+j-1 # 13 files have unmatched lines
+
+# Name of files that have unmatched lines
+unmatched_file_name[1:j-1]
+
+```
+
+By examing the line difference, we notice that it is coming from unmatched space line. We can manually adjust this problem, and from now on, we do not have files with unmatched line numbers. From this point, to avoid any confusion, we rename the original file folders into `ground_truth_org` and `tesseract_org`.
+
+```{r}
+# Remove the line with different length of tokens
+for (i in c(1:length(file_name_vec))){
+  ground_truth_docu <- readLines(paste0(ground_truth_path,file_name_vec[i]), warn = FALSE, encoding = "UTF-8")
+  tesseract_text_docu <- readLines(paste0(tesseract_text_path,file_name_vec[i]), warn = FALSE, encoding = "UTF-8")
+  total_line <-c()
+  total_line <- total_line + length(ground_truth_docu)
+  temp_ground_docu <- c()
+  temp_tesseract_docu <- c()
+  for (j in c(1:length(ground_truth_docu))){
+    ground_truth_words <- strsplit(ground_truth_docu[j], " ")
+    ground_truth_words <- ground_truth_words[[1]]
+    tesseract_text_words <- strsplit(tesseract_text_docu[j], " ")
+    tesseract_text_words <- tesseract_text_words[[1]]
+    
+    #check the length of lines
+    if (length(ground_truth_words) == length(tesseract_text_words)){
+      #get each words length
+      ground_nchar <- nchar(ground_truth_words)
+      tesseract_nchar <- nchar(tesseract_text_words)
+      #find the word with same length
+      idx_nchar <- ground_nchar == tesseract_nchar
+      #write the line with same words length
+      temp_ground_docu <- c(temp_ground_docu, paste0(ground_truth_words[idx_nchar], collapse = ""))
+      temp_tesseract_docu <- c(temp_tesseract_docu, paste0(tesseract_text_words[idx_nchar], collapse = ""))
+    }
+  }
+  writeLines(temp_ground_docu, paste0("../output/ground_truth_clean/",file_name_vec[i]), useBytes = TRUE)
+  writeLines(temp_tesseract_docu, paste0("../output/tesseract_text_clean/",file_name_vec[i]), useBytes = TRUE)
+}
+```
+
+We save the cleaned files in `output` so that it will not be confused with the original data folder.
+
 # Step 3 - Error detection
 
 Now, we are ready to conduct post-processing, based on the Tessearct OCR output. First of all, we need to detect errors, or *incorrectly processed words* -- check to see if an input string is a valid dictionary word or if its n-grams are all legal.
