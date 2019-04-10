@@ -62,7 +62,7 @@ if (!require("pacman")) {
   library(devtools)
   install_github("trinker/pacman")
 }
-library(lexicon)
+# library(lexicon)
 library(dplyr)
 library(plyr)
 library(tidyverse)
