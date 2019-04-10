@@ -11,8 +11,8 @@ potential_correction <- function(typo)
                            change=character(),
                            type=character(),
                            stringsAsFactors=FALSE)
-  typo <- tolower(typo)
-  typo <- gsub('[[:punct:] ]+','',typo)
+  #typo <- tolower(typo)
+  #typo <- gsub('[[:punct:] ]+','',typo)
   typo_characters <- strsplit(typo, "")[[1]]
   if(length(typo_characters) == 0)
   {

@@ -65,6 +65,7 @@ if (!require("pacman")) {
 library(lexicon)
 library(dplyr)
 library(plyr)
+library(tidyverse)
 
 pacman::p_load(knitr, readr, stringr, tesseract, vecsets)
 source('../lib/ifCleanToken.R')
@@ -216,38 +217,6 @@ The referenced papers are:
 
 ####Step 0: Generate Potential Candidates
 
-```{r eval=FALSE}
-# For every typo, apply potential_correction function and for each candidate, compute the probability
-
-## Create a list that contains typo and position in tesseract_vec
-## This is done by ../lib/typo position.R
-load('../output/typos.RData')
-
-## For each typo, list the candidate
-source('../output/potential correction.R')
-
-candidates <- data.frame(typo=character(),
-                           correction=character(),
-                           pos=integer(),
-                           change=character(),
-                           type=character(),
-                           stringsAsFactors=FALSE)
-
-for(i in seq(1,nrow(typos),1000))
-{
-  j <- ifelse((i+1000-1)<=nrow(typos),i+1000-1,nrow(typos))
-  for(k in i:j)
-  {
-    temp <- potential_correction(typos[k,1])
-    candidates <- candidates%>%
-      bind_rows(temp)
-  }
-  print(i) # This helps to track the process
-}
-# Note that some of the typos cannot find a meaningful(listed in the dictionary) correction.
-save(candidates,file='../output/candidates.RData')
-```
-
 ```{r}
 # To keep consistency, we also generated the candidate list that is outputed by using AP dictionary
 load('../output/typos.RData')
@@ -261,16 +230,22 @@ candidates <- data.frame(typo=character(),
                            type=character(),
                            stringsAsFactors=FALSE)
 
-for(i in seq(1,nrow(typos),1000))
+# only need to compute the probability for unique typos
+typo_unique <- sapply(typos[,1],tolower)%>%
+  as.vector()%>%
+  gsub('[[:punct:] ]+','',.)%>%
+  as.data.frame()%>%
+  distinct()
+
+typo_unique <- typo_unique[typo_unique!=""] # remove empty elements
+
+for(i in 1:nrow(typo_unique))
 {
-  j <- ifelse((i+1000-1)<=nrow(typos),i+1000-1,nrow(typos))
-  for(k in i:j)
-  {
-    temp <- potential_correction(typos[k,1])
-    candidates <- candidates%>%
-      bind_rows(temp)
-  }
-  # print(i) This is used to record the process
+  temp <- potential_correction(typos[k,1])
+  candidates <- candidates%>%
+    bind_rows(temp)
+  if(i%%100==0)
+  {print(i)} # This helps to track the process
 }
 # Note that some of the typos cannot find a meaningful(listed in the dictionary) correction.
 candidates_ap <- candidates
