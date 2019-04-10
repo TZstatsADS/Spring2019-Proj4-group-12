@@ -65,6 +65,7 @@ for(i in 1:nrow(ap_freq)){
 colnames(chars)<-letters
 rownames(chars)<-c(letters,"@")
 chars
+save(chars,file='../output/character_bigram_ap.RData')
 ```
 
 
@@ -78,9 +79,12 @@ m_sub <- read_csv("../data/confusion_matrix/sub_matrix.csv") %>% select(2:27)
 
 ## Step 4: Conditional Probability Calculation
 add_prob <- function(x, y){
-  idx_x <- ifelse(x %in% letters, which(letters==x), 27)
-  idx_y <- which(letters==y)
-  return(m_add[idx_x, idx_y]/sum(chars[idx_x,]))
+  if(y %in% letters){
+    idx_x <- ifelse(x %in% letters, which(letters==x), 27)
+    idx_y <- which(letters==y)
+    return(m_add[idx_x, idx_y]/sum(chars[idx_x,]))
+  }
+  else return(0)
 }
 
 del_prob <- function(x, y){
@@ -112,7 +116,8 @@ prior <- function(c){
 
 ```{r}
 ## Step 6: Calculate the conditional (error) probability
-candidate_scoring <- function(typo){
+load("../output/candidates.RData")
+prob_t_c_ap <- function(typo){
   # Input: the wrong word
   # Output: a data frame contains:
   ## - typo: the wrong word typed in
@@ -155,7 +160,21 @@ candidate_scoring <- function(typo){
   rk <- data.frame(typo = rep(typo, nrow(list_cand)), correction= correction, pc = pc, ptc = scr) %>% dplyr::arrange(desc(ptc))
   return(rk)
 }
+```
 
-## Example: acress
-candidate_scoring('acress')
+###Output:
+```{r}
+load("../output/candidates.RData")
+
+unique_cand <- unique(candidates_ap$typo)
+unique_cand_list <- as.list(unique_cand)
+cand_prob_wt_context <- lapply(unique_cand_list, prob_t_c_ap)
+cand_prob_wt_context_df <-ldply(cand_prob_wt_context,data.frame)
+```
+
+```{r}
+# Save the Table
+## Illustration
+cand_prob_wt_context_df[1:10,]
+save(cand_prob_wt_context_df,file = "../output/candidate_prob_wt_context.RData")
 ```
