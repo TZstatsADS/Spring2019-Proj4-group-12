@@ -234,14 +234,18 @@ candidates <- data.frame(typo=character(),
 typo_unique <- sapply(typos[,1],tolower)%>%
   as.vector()%>%
   gsub('[[:punct:] ]+','',.)%>%
-  as.data.frame()%>%
+  as.data.frame(stringsAsFactors=FALSE)%>%
   distinct()
 
 typo_unique <- typo_unique[typo_unique!="",] # remove empty elements
+num_letter <- sapply(typo_unique,strsplit,split="")%>%
+  sapply(.,length)%>%
+  as.vector()
+typo_unique <- typo_unique[num_letter>1] # remove empty elements and elements that only have one letter
 
 for(i in 1:length(typo_unique))
 {
-  temp <- potential_correction(typos[i,1])
+  temp <- potential_correction(typo_unique[i])
   candidates <- candidates%>%
     bind_rows(temp)
   if(i%%100==0)
