@@ -237,7 +237,6 @@ typo_unique <- sapply(typos[,1],tolower)%>%
   as.data.frame(stringsAsFactors=FALSE)%>%
   distinct()
 
-typo_unique <- typo_unique[typo_unique!="",] # remove empty elements
 num_letter <- sapply(typo_unique,strsplit,split="")%>%
   sapply(.,length)%>%
   as.vector()
