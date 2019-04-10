@@ -237,11 +237,11 @@ typo_unique <- sapply(typos[,1],tolower)%>%
   as.data.frame()%>%
   distinct()
 
-typo_unique <- typo_unique[typo_unique!=""] # remove empty elements
+typo_unique <- typo_unique[typo_unique!="",] # remove empty elements
 
-for(i in 1:nrow(typo_unique))
+for(i in 1:length(typo_unique))
 {
-  temp <- potential_correction(typos[k,1])
+  temp <- potential_correction(typos[i,1])
   candidates <- candidates%>%
     bind_rows(temp)
   if(i%%100==0)
@@ -249,7 +249,7 @@ for(i in 1:nrow(typo_unique))
 }
 # Note that some of the typos cannot find a meaningful(listed in the dictionary) correction.
 candidates_ap <- candidates
-save(candidates_ap,file='../output/candidates_ap.RData') # possible correction by AP
+save(candidates_ap,file='../output/candidates.RData') # possible correction by AP
 ```
 
 # Step 5 - Performance measure
