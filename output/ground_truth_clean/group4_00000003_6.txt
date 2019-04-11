@@ -1,373 +1,373 @@
-Arsenic,PolychlorinatedBiphenyls,Phthalate
-Esters,Trichloroethylene,Chloride
-DOWCHEMICAL
-Acrylonitrile,AllylChloride,Benzene,Chlorobenzenes,EpoxyResins,
-Ethers,Styrene,Trichloroethylene,VinylChloride,
-VinylideneChloride
-Acrylonitrile,Benzene,EthyleneFluorocarbons,
-Phosgene,PhthalateEsters,PolychlorinatedBiphenyls,Titanium
-Dioxide,Chloride
-DUPONTCANADAINC.
+Arsenic, Polychlorinated Biphenyls, Phthalate
+Esters, Trichloroethylene, Chloride
+DOW CHEMICAL
+Acrylonitrile, Allyl Chloride, Benzene, Chlorobenzenes, Epoxy Resins,
+Ethers, Styrene, Trichloroethylene, Vinyl Chloride,
+Vinylidene Chloride
+Acrylonitrile, Benzene, Ethylene Fluorocarbons,
+Phosgene, Phthalate Esters, Polychlorinated Biphenyls, Titanium
+Dioxide, Chloride
+DU PONT CANADA INC.
 Fluorocarbons
-ELCOCORPORATION
+ELCO CORPORATION
 Styrene
-EASTMANKODAK
+EASTMAN KODAK
 Biphenyls
-ESSEXCHEMICAL
+ESSEX CHEMICAL
 Fluorocarbons
-AllylEthyleneEthylenePhthalate
-Esters,Trichloroethylene,Chloride,ZincDialkyl
+Allyl Ethylene Ethylene Phthalate
+Esters, Trichloroethylene, Chloride, Zinc Dialkyl
 Dithiophosphates
 EXXON
-Chloride,DialkylDithiophosphates
+Chloride, Dialkyl Dithiophosphates
 CORP
-EthyleneOxide
-GENERALTIRE&RUBBER
+Ethylene Oxide
+GENERAL TIRE & RUBBER
 037790
 
 BFGOODRICH
-AllylChloride,EthyleneRubberAdditives,vinyl
-GOODYEARTIRE&RUBBER
-VinylideneChloride
-GREATCHEMICAL
+Allyl Chloride, Ethylene Rubber Additives, vinyl
+GOODYEAR TIRE & RUBBER
+Vinylidene Chloride
+GREAT CHEMICAL
 Chloride
-GREATLAKES
-GULFCHEMICALCO.
-Acrylonitrile,Benzene,EthyleneStyrene,Chloride
-GULF&
+GREAT LAKES
+GULF CHEMICAL CO.
+Acrylonitrile, Benzene, Ethylene Styrene, Chloride
+GULF &
 HALCON
-EthyleneOxide
-HOECHSTAG/AMERICANHOECHST
+Ethylene Oxide
+HOECHST AG/AMERICAN HOECHST
 Fluorocarbons
 
-PolychlorinatedBiphenyls,Trichloroethylene,Chloride
-ICIAMERICAS
-IMPERIALINDUSTRIESPLC
-Fluorocarbons,Trichloroethylene
+Polychlorinated Biphenyls, Trichloroethylene, Chloride
+ICI AMERICAS
+IMPERIAL INDUSTRIES PLC
+Fluorocarbons, Trichloroethylene
 
 fhthalate
-ISCCHEMICALSLTD
+ISC CHEMICALS LTD
 fluorocarbons
-JAPANFLOWASSOC.
+JAPAN FLOW ASSOC.
 Fluorocarbons
-EthyleneOxide
+Ethylene Oxide
 037791
-KAISERANDCHEMICALCORP
-Fluorcarbons,PolychlorinatedBiphenyls
-KALIAG
+KAISER AND CHEMICAL CORP
+Fluorcarbons, Polychlorinated Biphenyls
+KALI AG
 Fluorocarbons
-KENDALLCO
+KENDALL CO
 Ethylene
 KEYSOR-CENTURY
 
 KOPPERS
-Arsenic,ButylatedHydroxytoluene,PhthalateEsters
+Arsenic, Butylated Hydroxytoluene, Phthalate Esters
 INDUSTRY
 LUBRI2QL
-ZincDialkyl
+Zinc Dialkyl
 MALLINCKRODT
 Ethylene
 BIOTROL
 Ethylene
-MITSDILTD
+MITSDI LTD
 fluorocarbons
 MOBAY
-fhosgene,Additives
-MOBILOIL
-Benzene,PhthalateEsters
-Benzene,Chlorobenzenes,Ketones,Polychlorinated
-MONTEDISONSPA
+fhosgene, Additives
+MOBIL OIL
+Benzene, Phthalate Esters
+Benzene, Chlorobenzenes, Ketones, Polychlorinated
+MONTEDISON SPA
 Phosgene
-MONTROSECORPOFCA
+MONTROSE CORP OF CA
 
 MORTON
-VinylideneChloride
+Vinylidene Chloride
 037792
 COMPANY
-EthyleneOxide
+Ethylene Oxide
 NL
 Titanium
-QLINCORPORATION
-GlycolEthers,PolychlorinatedBiphenyls,Phosgene,Vinylidene
+QLIN CORPORATION
+Glycol Ethers, Polychlorinated Biphenyls, Phosgene, Vinylidene
 Chloride
 Arsenic
 PANTASOTS
-PhthalateEsters
+Phthalate Esters
 PENNWALT
 Benzene
-PPGINDUSTRIES
-Chlorobenzenes,EthyleneEthyleneEthylene
-Oxide,GlycolEthers,PolychlorinatedBiphenyls,Phosgene,
+PPG INDUSTRIES
+Chlorobenzenes, Ethylene Ethylene Ethylene
+Oxide, Glycol Ethers, Polychlorinated Biphenyls, Phosgene,
 Benzene
 
 REICHHOLD
-EpoxyResins
-ROHM&HAAS
+Epoxy Resins
+ROHM & HAAS
 RUBICON
 Phosgene
 
 Arsenic
-SCMCORPORATION
-AilylBenzene,ButylatedHydroxytoluene,EpoxyResins,
-PhthalateEsters,Chloride,Styrene,ZincDialkyl
+SCM CORPORATION
+Ailyl Benzene, Butylated Hydroxytoluene, Epoxy Resins,
+Phthalate Esters, Chloride, Styrene, Zinc Dialkyl
 Dithiophosphates,
 
 Butylated
 037793
 
 SHERWOOD
-EthyleneOxide
-SHOWADENKO
+Ethylene Oxide
+SHOWA DENKO
 Fluorocarbons
-STANDARDCHLORINECHEMICALCO
-STANDARDOIL
-Acrylonitrile,Benzene
+STANDARD CHLORINE CHEMICAL CO
+STANDARD OIL
+Acrylonitrile, Benzene
 Ethylene
-EthylenePhosgene,PhthalateEsters,Polychlorinated
+Ethylene Phosgene, Phthalate Esters, Polychlorinated
 STSPEN
 Styrene
 Arsenic
 TECKNOR-APEX
-TENNESSEEEASTMAN
-GlycolEthers,Ketones,PhthalateEsters,Vinyliden
+TENNESSEE EASTMAN
+Glycol Ethers, Ketones, Phthalate Esters, Vinyliden
 Chloride
 
 TEXACO
 LTD
-TOMSRIVER
+TOMS RIVER
 Phosgene
 LABS
 Ethylene
 
 037794
-Acrylonitrile,ButylatedHydroxytoluene,RubberAdditives,Vinyl
+Acrylonitrile, Butylated Hydroxytoluene, Rubber Additives, Vinyl
 Chloride
 Phosgene
-VULCANMATERIALS
+VULCAN MATERIALS
 
 9/2S/81
 0377*96
 H
-SincethelastBoardofDirectors'meeting,the
-calmadepresentationsatthefollowingconferences:
-enceonWasteTechnology(Boston,
-DegreeofHazard*
-ManagementofUncontrolledHazardousWasteSites
-(Washington,DC).
-PlenaryLecture.
+Since the last Board of Directors' meeting, the
+cal made presentations at the following conferences:
+ence on Waste Technology (Boston,
+Degree of Hazard*
+Management of Uncontrolled Hazardous Waste Sites
+(Washington, DC).
+Plenary Lecture.
 Topic:
 Degree
-ofHazard.
-SheInmedia
-Detroit,BostonandProvidence.
+of Hazard.
+She In media
+Detroit, Boston and Providence.
 tours
 in
 San
 Confer­
 Topic:
 Francisco,
-TheTechnicalDirectorIsworkingactivelytheCon­
-servationtodevelopahazardouswastebook­
-letforuseInlocalcommunities.
-memberontheCoastGuard'sChemicalTransportationAdvisory
-CommitteeanInternationalSuperfundwasdiscussed.
+The Technical Director Is working actively the Con­
+servation to develop a hazardous waste book­
+let for use In local communities.
+member on the Coast Guard's Chemical Transportation Advisory
+Committee an International Superfund was discussed.
 (See
-Themajorcentered
-theTechnicalReviewCommittee.
-TheReviewbeonNovember
+The major centered
+the Technical Review Committee.
+The Review be on November
 
-onNovember18-19.
-TheandselectedAdvisorsare
-workingTexasAAMtorefinetheirpresentation.
+on November 18-19.
+The and selected Advisors are
+working Texas AAM to refine their presentation.
 They're
-workingtotoaminimumtheoutsideresourcesrequired.
-Thiswillcontinuethroughthethreeremaining
-developmentalworkshops.
-Thereare18companies,24stations,onthe
-"hardcopy"network.
-one-thirdofthetotal
-trafficthroughthissystem.
-TheAdvisorsmetOctober28-29todiscussa
-numberofmatters,includingreportingbycarriers,and
-emergencyresponseoutsideoftheUnitedStates.
+working to to a minimum the outside resources required.
+This will continue through the three remaining
+developmental workshops.
+There are 18 companies, 24 stations, on the
+"hard copy" network.
+one-third of the total
+traffic through this system.
+The Advisors met October 28-29 to discuss a
+number of matters, including reporting by carriers, and
+emergency response outside of the United States.
 037796
 
 3
-AmemberIndicatesthatfortheperiod
-endingJune30,1981,CMAmembershaveimprovedenergy
-efficiencyby23.4%,compared1972.
+A member Indicates that for the period
+ending June 30, 1981, CMA members have improved energy
+efficiency by 23.4%, compared 1972.
 ENGINEERING
-andcommentedonfivestandardsofsubstan­
-adoptionasAmericanNationalStandardsbyUnderwriters
-toriesandManufacturersStandardizationSociety.
+and commented on five standards of substan­
+adoption as American National Standards by Underwriters
+tories and Manufacturers Standardization Society.
 CMA's
-majorconcerncontinuesbeadequatesafetyatreasonable
+major concern continues be adequate safety at reasonable
 cost.
-Ofthosereviewed,reaffirmedItsnegativevoteon
-whichresultInexcessiveInstallationandmaintenance
+Of those reviewed, reaffirmed Its negative vote on
+which result In excessive Installation and maintenance
 costs.
-effectsofpoweroutages,andcuresforthem,withaview
-towardsremedialaction.
-TheCommitteeIspreparingandselectingaspeakerfor
-theforthethirdProcessComputerUsersForumtobe
-heldIn1982.
-Thisforumwillbuilduponwhatwaslearned
-Itwillalso
-systemsandscientificcomputations,andfull
-ofInstalledsystems.
+effects of power outages, and cures for them, with a view
+towards remedial action.
+The Committee Is preparing and selecting a speaker for
+the for the third Process Computer Users Forum to be
+held In 1982.
+This forum will build upon what was learned
+It will also
+systems and scientific computations, and full
+of Installed systems.
 CHEMICAL
-hasbeenmeetingEPAInaseriesofdiscussions
-ThehavefocusedonIssuesraised
-byEPAanddatarequirementsthattheAgencybelievesitneeds
-Examplesdefinitionofa
-qualifiedcriteriaforpolymerexemptionsand
-cationfora25,000poundcut-offforlow-volumeexemptions,
-IntendstocompleteItsdiscussions
-EPAbytheendof1981,andlooksforEPAproposedrulesduring
-thefirstof1982.
-staffaneconomicanalysissupportingour
-abilityofnewchemicals,which,inturn,reducesthe
-innovativecapabilityofthechemicalIndustry.
-andstaffmetwithDonClay,
-DirectortheOfficeofToxicSubstances(OTS)discuss
-majorIssuesunder,TSCA.
-Mr.Clayhasassigned
+has been meeting EPA In a series of discussions
+The have focused on Issues raised
+by EPA and data requirements that the Agency believes it needs
+Examples definition of a
+qualified criteria for polymer exemptions and
+cation for a 25,000 pound cut-off for low-volume exemptions,
+Intends to complete Its discussions
+EPA by the end of 1981, and looks for EPA proposed rules during
+the first of 1982.
+staff an economic analysis supporting our
+ability of new chemicals, which, in turn, reduces the
+innovative capability of the chemical Industry.
+and staff met with Don Clay,
+Director the Office of Toxic Substances (OTS) discuss
+major Issues under, TSCA.
+Mr. Clay has assigned
 037798
 
-threeofstafftodevelopcomprehensiveEPAprogramsfor
-reporting,PMNs,andcontractmanagementforOTSactivities.
-PMNwillbepartofEPA'spriorityprograms,which
-TaskForceonRegulatoryReliefdealingwithTSCArelatedIssues.
-TheupdatedetailedtheprogressEPAhasmade
-InthekeyIssueshighlightedIntheoriginal
+three of staff to develop comprehensive EPA programs for
+reporting, PMNs, and contract management for OTS activities.
+PMN will be part of EPA's priority programs, which
+Task Force on Regulatory Relief dealing with TSCArelated Issues.
+The update detailed the progress EPA has made
+In the key Issues highlighted In the original
 report.
-heldatwo-dayplanningmeetingonOctoberto
-discusshowthecurrentobjectiveandkeystrategiesofeach
-taskarehelpingtoachievetheoverallgoalsofCMAand
-topromoteeffectiveregulationsunderTSCA.
-toholdanMeetingformembers
-onDecember3.
-Dr.JohnIstheInvitedguest
-speaker;willspeakontheAgency'splansforImplementing
+held a two-day planning meeting on October to
+discuss how the current objective and key strategies of each
+task are helping to achieve the overall goals of CMA and
+to promote effective regulations under TSCA.
+to hold an Meeting for members
+on December 3.
+Dr. John Is the Invited guest
+speaker; will speak on the Agency's plans for Implementing
 TSCA.
 Testing
-CommentsarepreparedonEPAtestrulesproposed
-Thetask
-IsalsoonastrategyforgettingclosureonSection4
-Testandrelatedissues.
+Comments are prepared on EPA test rules proposed
+The task
+Is also on a strategy for getting closure on Section 4
+Test and related issues.
 Reporting
-PlansarebeingmadetodevelopastrategyforImplement­
-8ofTSCAInamoreIntegratedmanner.
-Thetask
+Plans are being made to develop a strategy for Implement­
+8 of TSCA In a more Integrated manner.
+The task
 CSIN
-ThemajoreffortofthetaskgroupIsplanningaworkshop
-forearly1982onthesubjectofdataquality.
-HAZARDSCOMMUNICATIONSSPECIALCOMMITTEE
-TheOSHAGrouphasreviewedCMA's
-proposalandhasallegedlyIncorporatedmostofIndustry's
-positionsInItsowndraft.
-AsofOctober3,theOSHAdraft
-hadnotsignedbySecretaryDonovan.
-Sheets,workertrainingandeducationprograms,andworkplace
-hazardscommunications.
-Itisthatthesesame
+The major effort of the task group Is planning a workshop
+for early 1982 on the subject of data quality.
+HAZARDS COMMUNICATIONS SPECIAL COMMITTEE
+The OSHA Group has reviewed CMA's
+proposal and has allegedly Incorporated most of Industry's
+positions In Its own draft.
+As of October 3, the OSHA draft
+had not signed by Secretary Donovan.
+Sheets, worker training and education programs, and workplace
+hazards communications.
+It is that these same
 037799
 1
 5
-willbeincorporatedintotheOSHArule,butthe
-thatdevelopedby
-AccesstoRecords
-recordsconsiderconfidentialityoftradesecrets.
+will be incorporated into the OSHA rule, but the
+that developed by
+Access to Records
+records consider confidentiality of trade secrets.
 
-thatnegotiationsemployeerepresentat1ves,
-accesstorecordstradesecrets.
-Moreover,continues
-HearingConservation
-tinuedtheamendmenttotheoccupationalnoisestandard.
-madeadditionalsuggestionsonremainingpartsofthe
-Standardtopermitcontinueduseofhearingconservation
-programswhichhavebeensosuccessfulIn.thechemical
+that negotiations employee representat1ves,
+access to records trade secrets.
+Moreover, continues
+Hearing Conservation
+tinued the amendment to the occupational noise standard.
+made additional suggestions on remaining parts of the
+Standard to permit continued use of hearing conservation
+programs which have been so successful In.the chemical
 
 I
-InformingPrimaryCarePhysiciansAboutOccupational
+Informing Primary Care Physicians About Occupational
 Medicine
-apioneeringcourseIncooperationwith
-primaryphysiciansandotherhealthprofessionalsabout
-occupationalmedicine.
-chemialconcern.
-InItscommentsontheInteragency
-controlofreproductivehazards,discussedthecomplexity
-andofInformationonthissubject.
-datatoAgency.
-RISKANALYSISSPECIALCOMMITTEE
-aproposed-policyforregulatoryImpact
-analysisforhealth,safetyandenvlronmentalchemicalregu-
+a pioneering course In cooperation with
+primary physicians and other health professionals about
+occupational medicine.
+chemial concern.
+In Its comments on the Interagency
+control of reproductive hazards, discussed the complexity
+and of Information on this subject.
+data to Agency.
+RISK ANALYSIS SPECIAL COMMITTEE
+a proposed- policy for regulatory Impact
+analysis for health, safety and envlronmental chemical regu-
 I
 037800
 
 6
 
-Thepolicyaddressesallpertinentaspects
-onecomponent.
-ApositiononregulatoryImpactanalysisIs
+The policy addresses all pertinent aspects
+one component.
+A position on regulatory Impact analysis Is
 12291.
-On29,CMA'sBoardofDirectorsapprovedthe
-PublicRiskAnalysisSpecialCommittee'sproposedpolicyon
-regulatoryImpactanalysis.
-AttheSemiannualMeetingInNovember,willrecommend
-toItsCommitteeandBoardofDirectorsthat
-sunsetandanewcommitteebeformed.
-Thiscommittee,the
-RegulatoryImpactSpecialCommitteewillhaveacharter
-andobjectivesmoreInlinethepolicyonregulatory
-appropriatemethodologiesforuseInregulatoryImpact
-taskgroupleadersandstaffexecutivesrequesting
-theirassistanceInprovidingVicePresidentBushwithan
-progressreportontheaccomplishmentsandremaining
-taskstheAdministration'sregulatoryreliefprogram.
-CleanAct
-mittalCongressmanWaxman'sonHealthandthe
-concerningamendmentoftheCleanAirAct.
+On 29, CMA's Board of Directors approved the
+Public Risk Analysis Special Committee's proposed policy on
+regulatory Impact analysis.
+At the Semiannual Meeting In November, will recommend
+to Its Committee and Board of Directors that
+sunset and a new committee be formed.
+This committee, the
+Regulatory Impact Special Committee will have a charter
+and objectives more In line the policy on regulatory
+appropriate methodologies for use In regulatory Impact
+task group leaders and staff executives requesting
+their assistance In providing Vice President Bush with an
+progress report on the accomplishments and remaining
+tasks the Administration's regulatory relief program.
+Clean Act
+mittal Congressman Waxman's on Health and the
+concerning amendment of the Clean Air Act.
 The
-materialssubmittedwillcoverallofCMA'spositionson
-A.CMAparticipatedInameetingatEPA-Durham
-oftheCleanAirAct.
-ScienceAdvisoryBoardreviewofthe(severalwillbe
-availablefortheAdmlnlstratortoreview.
+materials submitted will cover all of CMA's positions on
+A.CMA participated In a meeting at EPA-Durham
+of the Clean Air Act.
+Science Advisory Board review of the (several will be
+available for the Admlnlstrator to review.
 The
-regulateunderSectionlist
-regulatingunderSection112.
-EPAwillingconsider
-changesIntheActIncludingcompressingandstandard
-setting,useofrisk"andregulatingbysource
+regulate under Section list
+regulating under Section 112.
+EPA willing consider
+changes In the Act Including compressing and standard
+setting, use of risk" and regulating by source
 categories.
-todiscussEPA'snewconceptonthe"howclean
+to discuss EPA's new concept on the "how clean
 037801
 
-IsIssue.EPAhassuggestedthatpracticableengineer*
-Ingsolutionsbeusedandtheywouldliketodevelopamatrix
-tobeusedasaguidancedocument.
+Is Issue. EPA has suggested that practicable engineer*
+Ing solutions be used and they would like to develop a matrix
+to be used as a guidance document.
 recom­
-whichwillbesubmittedtoEPA.Themeetingrepre­
-sentedsignificantprogressIndevelopingaworkableapproach
-for"howcleanIsclean"Issue.
-ofCMAEnvironmental.Distribution,andLegal
-metwithrepresentativesoftheU.S.CoastGuardto
-andInConnectionwiththeCarriageofNoxiousand
-Ourofthisdraft
-allunacceptableprovisionswewereabletominimizelast
-(l.e.,theCoastGuard).
-SpeakingEngagements
-JoeattendedtheOakRidgeNationalLaboratory
-LifeSciencesInGatllnburg,TennesseeonOctober
-Hegaveapresentationon"TheEffectoftheResource
-PracticesIntheChemicalIndustry."
-J.conductedamediatourInCentralFlorida
-October26-28,1981.Sheconcentratedherremarksprimarilyon
-thetopicofhazardouswastes.
-Ally!ChlorideProgramPanelhasrecentlyacceptedthe
-finalreportbyDowChemicaloftheand
+which will be submitted to EPA. The meeting repre­
+sented significant progress In developing a workable approach
+for "how clean Is clean" Issue.
+of CMA Environmental. Distribution, and Legal
+met with representatives of the U.S. Coast Guard to
+and In Connection with the Carriage of Noxious and
+Our of this draft
+all unacceptable provisions we were able to minimize last
+(l.e., the Coast Guard).
+Speaking Engagements
+Joe attended the Oak Ridge National Laboratory
+Life Sciences In Gatllnburg, Tennessee on October
+He gave a presentation on "The Effect of the Resource
+Practices In the Chemical Industry."
+J. conducted a media tour In Central Florida
+October 26-28, 1981. She concentrated her remarks primarily on
+the topic of hazardous wastes.
+Ally! Chloride Program Panel has recently accepted the
+final report by Dow Chemical of the and
 
-andtheNationalBureauofStandardsaresponsoringan
-1981.ThesymposiumwillprovideameanswherebyIndustry
-andgovernmentagenciesmayreachanunderstandingforcosteffectiveregulationofarsenicasahazardousmaterialthrough
+and the National Bureau of Standards are sponsoring an
+1981. The symposium will provide a means whereby Industry
+and government agencies may reach an understanding for costeffective regulation of arsenic as a hazardous material through
