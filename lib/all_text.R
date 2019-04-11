@@ -19,15 +19,9 @@ for (i in 1:length(file_name_vec)){
 save(gd_all,file = './output/gd_all.RData')
 
 ## deal with punctuation and paste all text
-all_text = gd_all %>%
-  gsub("\\(","",.) %>%
-  gsub("\\)","",.) %>%
-  gsub("\\\"","",.) %>%
-  gsub("\\'","",.) %>%
-  gsub("\\$","",.) %>%
-  gsub("\\..."," ",.) %>%
-  tolower(.) %>%
-  gsub("[[:punct:]]"," 0 ",.)
+source('~/GitHub/Spring2019-Proj4-group-12/lib/cleantext.R')
+all_text = cleantext(gd_all)
+all_text = paste("NULL ",all_text)
 save(all_text,file = './output/all_text.RData')
 ## calculate context frequency
 
@@ -38,5 +32,19 @@ bigram_counts = bigrams %>%
   separate(ngrams, c("l", "r"), sep = " ") %>%
   .[,c("l","r","freq")]
 
-save(bigram_counts,file = './output/bigram_counts.RData')
+## GT turning
+r=table(bigram_counts$freq)
+## r_star=c(r["1"]/316887918)
+r_star = c()
+for (i in 1:(length(r)-1)) {
+  r_star = c(r_star,(as.integer(names(r[i]))+1)*r[i+1]/r[i])
+}
+r_star = c(r_star, as.integer(names(r[length(r)]))+1)
+names(r_star) = names(r)
+f = c()
+for (j in 1:nrow(bigram_counts)) {
+  f = c(f,r_star[as.character(bigram_counts[j,]$freq)])
+}
 
+bigram_counts = cbind(bigram_counts,f)
+save(bigram_counts,file = './output/bigram_counts.RData')
