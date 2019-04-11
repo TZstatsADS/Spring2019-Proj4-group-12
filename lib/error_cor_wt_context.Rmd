@@ -108,10 +108,12 @@ sub_prob <- function(x, y){
 ## Step 5: Calculate the Prior: pr(c)
 ### this is the probability of the correct word appearing in the AP dictionary 
 prior <- function(c){
-  S <- sum(ap_freq$`sum(count)`)
+  N <- sum(ap_freq$`sum(count)`)
+  V <- nrow(ap_freq)
   count <- ifelse(c %in% ap_freq$term,ap_freq[which(ap_freq$term==c),]$`sum(count)`,0)
-  return(count/S)
+  return((count+0.5)/(N+V/2))
 }
+
 ```
 
 ```{r}
@@ -176,5 +178,155 @@ cand_prob_wt_context_df <-ldply(cand_prob_wt_context,data.frame)
 # Save the Table
 ## Illustration
 cand_prob_wt_context_df[1:10,]
-save(cand_prob_wt_context_df,file = "../output/candidate_prob_wt_context.RData")
+cand_prob_wt_context_df_ap <- cand_prob_wt_context_df
+save(cand_prob_wt_context_df_ap,file = "../output/cand_prob_wt_context_ap.RData")
+```
+
+---
+## Ground Truth Dictionary:
+Now, we repeat the same steps with the `ground_truth` dictionary
+```{r}
+## Step1: Load Frequency Table of Ground Truth
+load("../output/ground_truth_frequency.RData")
+ground_truth_freq$tokens <- as.character(ground_truth_freq$tokens)
+head(ground_truth_freq)
+```
+
+```{r}
+## Step 2: Find the Frequency of Single Character and the Consecutive Two Letters
+chars <- array(0, dim=c(27,26))
+for(i in 1:nrow(ground_truth_freq)){
+  string <- ground_truth_freq$tokens[i]
+  count <- ground_truth_freq$n[i]
+  head <- substring(string,1,1)
+  chars[27,which(letters==head)] =  chars[27,which(letters==head)] + count
+  for (s in 2:nchar(string)) {
+    x = substring(string,s-1, s-1)
+    y = substring(string, s, s)
+    row = which(letters==x)
+    col = which(letters==y)
+    chars[row, col] = chars[row, col] + count
+  }
+}
+# Adding names to the character matrix
+# Explanation: the character matrix captures the frequency of a pair of letter showing up in the AP dictionary
+# the last row counts the frequency of a single letter
+colnames(chars)<-letters
+rownames(chars)<-c(letters,"@")
+chars
+save(chars,file='../output/character_bigram_gd.RData')
+```
+
+
+```{r,warning=FALSE}  
+## Step 3: Importing the Confusion Matrix
+source('../lib/potential_correction_gd.R')
+m_add <- read_csv("../data/confusion_matrix/add_matrix.csv") %>% select(2:27)
+m_del <- read_csv("../data/confusion_matrix/del_matrix.csv") %>% select(2:27)
+m_rev <- read_csv("../data/confusion_matrix/rev_matrix.csv") %>% select(2:27)
+m_sub <- read_csv("../data/confusion_matrix/sub_matrix.csv") %>% select(2:27)
+
+## Step 4: Conditional Probability Calculation
+add_prob <- function(x, y){
+  if(y %in% letters){
+    idx_x <- ifelse(x %in% letters, which(letters==x), 27)
+    idx_y <- which(letters==y)
+    return(m_add[idx_x, idx_y]/sum(chars[idx_x,]))
+  }
+  else return(0)
+}
+
+del_prob <- function(x, y){
+  idx_x <- ifelse(x %in% letters, which(letters==x), 27)
+  idx_y <- which(letters==y)
+  return(m_del[idx_x, idx_y]/chars[idx_x, idx_y])
+}
+
+rev_prob <- function(x, y){
+  idx_x <- which(letters==x)
+  idx_y <- which(letters==y)
+  return(m_rev[idx_x, idx_y]/chars[idx_x, idx_y])
+}
+
+sub_prob <- function(x, y){
+  idx_x <- which(letters==x)
+  idx_y <- which(letters==y)
+  return(m_sub[idx_x, idx_y]/sum(chars[,idx_y]))
+}
+
+## Step 5: Calculate the Prior: pr(c)
+### this is the probability of the correct word appearing in the ground_truth dictionary 
+prior <- function(c){
+  N <- sum(ground_truth_freq[,2])
+  V <- nrow(ground_truth_freq)
+  freq <- ifelse((c %in% ground_truth_freq$tokens),
+                 ground_truth_freq[ground_truth_freq$tokens==c,2],
+                 0)
+  return((freq+0.5)/(N+V/2))
+}
+```
+
+```{r}
+## Step 6: Calculate the conditional (error) probability
+load("../output/candidates_gd.RData")
+prob_t_c_ap <- function(typo){
+  # Input: the wrong word
+  # Output: a data frame contains:
+  ## - typo: the wrong word typed in
+  ## - correction: possible corrections
+  ## - pc: prior probability
+  ## - ptc: error probability
+  list_cand <- potential_correction(typo)
+  correction <- c()
+  scr <- c()
+  pc <- c()
+  for (i in 1:nrow(list_cand)) {
+    cor <- list_cand[i,]$correction
+    typ <- list_cand[i,]$type
+    t <- list_cand[i,]$typo
+    pos <- list_cand[i,]$pos
+    chn <- list_cand[i,]$change
+    
+    if(typ=='i'){
+      s <- as.numeric(ifelse(pos==0, add_prob(NA, chn), add_prob(substring(cor, pos, pos), chn)))
+    }
+    
+    if(typ=='d'){
+      s <- as.numeric(ifelse(pos==0, del_prob(NA, chn), del_prob(substring(cor, pos, pos), chn)))
+    }
+    
+    if(typ=='s'){
+      s <- as.numeric(sub_prob(substring(t, pos+1, pos+1), chn))
+    }
+    
+    if(typ=='r'){
+      s <- as.numeric(rev_prob(substring(cor, pos+1, pos+1), substring(cor, pos+2, pos+2)))
+    }
+    
+    pr <- prior(cor)
+    
+    correction <- c(correction, cor)
+    scr <- c(scr, s)
+    pc <- c(pc, pr)
+  }
+  rk <- data.frame(typo = rep(typo, nrow(list_cand)), correction= correction, pc = pc, ptc = scr) %>% dplyr::arrange(desc(ptc))
+  return(rk)
+}
+```
+
+###Output:
+```{r}
+load("../output/candidates_gd.RData")
+
+unique_cand <- unique(candidates_gd$typo)
+unique_cand_list <- as.list(unique_cand)
+cand_prob_wt_context <- lapply(unique_cand_list, prob_t_c_ap)
+cand_prob_wt_context_df <-ldply(cand_prob_wt_context,data.frame)
+```
+
+```{r}
+# Save the Table
+## Illustration
+cand_prob_wt_context_df[1:10,]
+save(cand_prob_wt_context_df,file = "../output/cand_prob_wt_cont_gd.RData")
 ```
