@@ -270,20 +270,54 @@ Both *precision* and *recall* are mathematically convenient measures because the
 Here, we only finished the **word level evaluation** criterions, you are required to complete the **character-level** part.
 
 ```{r}
-ground_truth_vec <- str_split(paste(current_ground_truth_txt, collapse = " ")," ")[[1]] #1078
-
+load('../output/gd_all.RData')
+load('../output/tesseract_vec.RData')
+load('../output/tesseract_correction.RData')
 ## Here, we compare the lower case version of the tokens
-old_intersect_vec <- vecsets::vintersect(tolower(ground_truth_vec), tolower(tesseract_vec)) #607
-new_intersect_vec <- vecsets::vintersect(tolower(ground_truth_vec), tolower(tesseract_delete_error_vec)) #600
+ground_truth_vec <- strsplit(gd_all," ")[[1]]%>%
+  sapply(.,tolower)%>%
+  as.vector()%>%
+  gsub('[[:punct:] ]+','',.)
 
+tesseract_vec <- unlist(tesseract_vec)%>%
+  sapply(.,tolower)%>%
+  as.vector()%>%
+  gsub('[[:punct:] ]+','',.)
+
+tesseract_delete_error_vec <- str_split(tesseract_correction," ")[[1]]%>%
+  sapply(.,tolower)%>%
+  as.vector()%>%
+  gsub('[[:punct:] ]+','',.)
+
+## word level
+old_intersect_vec <- vecsets::vintersect(ground_truth_vec,tesseract_vec)
+new_intersect_vec <- vecsets::vintersect(ground_truth_vec,tesseract_delete_error_vec)
+
+## character level
+GT_character_vec <- unlist(strsplit(ground_truth_vec,""))
+T_character_vec <- unlist(strsplit(tesseract_vec,""))
+T_deleted_character_vec <- unlist(strsplit(tesseract_delete_error_vec,""))
+
+old_intersect_character <- vecsets::vintersect(GT_character_vec,T_character_vec)
+new_intersect_character <- vecsets::vintersect(GT_character_vec,T_deleted_character_vec)
+
+
+## Table
 OCR_performance_table <- data.frame("Tesseract" = rep(NA,4),
                                     "Tesseract_with_postprocessing" = rep(NA,4))
-row.names(OCR_performance_table) <- c("word_wise_recall","word_wise_precision",
-                                      "character_wise_recall","character_wise_precision")
+row.names(OCR_performance_table) <- c("word_wise_recall","word_wise_precision",          "character_wise_recall","character_wise_precision")
+
 OCR_performance_table["word_wise_recall","Tesseract"] <- length(old_intersect_vec)/length(ground_truth_vec)
-OCR_performance_table["word_wise_precision","Tesseract"] <- length(old_intersect_vec)/length(tesseract_vec)
+OCR_performance_table["word_wise_precision","Tesseract"] <- length(old_intersect_vec)/length(T_character_vec)
 OCR_performance_table["word_wise_recall","Tesseract_with_postprocessing"] <- length(new_intersect_vec)/length(ground_truth_vec)
-OCR_performance_table["word_wise_precision","Tesseract_with_postprocessing"] <- length(new_intersect_vec)/length(tesseract_delete_error_vec)
+OCR_performance_table["word_wise_precision","Tesseract_with_postprocessing"] <- length(new_intersect_vec)/length(T_deleted_character_vec)
+
+OCR_performance_table["character_wise_recall","Tesseract"] <- length(old_intersect_character)/length(GT_character_vec)
+OCR_performance_table["character_wise_precision","Tesseract"] <- length(old_intersect_character)/length(tesseract_vec)
+OCR_performance_table["character_wise_recall","Tesseract_with_postprocessing"] <- length(new_intersect_character)/length(GT_character_vec)
+OCR_performance_table["character_wise_precision","Tesseract_with_postprocessing"] <- length(new_intersect_character)/length(tesseract_delete_error_vec)
+
+
 kable(OCR_performance_table, caption="Summary of OCR performance")
 ```
 
