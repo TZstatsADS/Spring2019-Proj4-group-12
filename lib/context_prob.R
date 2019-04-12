@@ -22,3 +22,13 @@ context_prob = function(text){
   
   return(c(pl,pr))
 }
+
+## find the left and right word of typo
+get_lr = function(pos){
+  x=pos[1];y=pos[2]
+  l = ifelse(y!=1, tesseract_vec[[x]][y-1], ".")
+  r = ifelse(y!=length(tesseract_vec[[x]]), tesseract_vec[[x]][y+1], ".")
+  return(c(l,r))
+}
+
+
