@@ -16,9 +16,9 @@ context_prob = function(text){
   pc_l = sum(bigram_counts[which(bigram_counts$r==c),]$f)
   pc_r = sum(bigram_counts[which(bigram_counts$l==c),]$f)
   pl = bigram_counts[which((bigram_counts$l==l) & (bigram_counts$r==c)),]$f
-  pl = ifelse(length(pl)>0, pl/pc_l, 31504/316887918)
+  pl = ifelse(length(pl)>0, pl/pc_l, 31504/316887918/pc_l)
   pr = bigram_counts[which((bigram_counts$l==c) & (bigram_counts$r==r)),]$f
-  pr = ifelse(length(pr)>0, pr/pc_r, 31504/316887918)
+  pr = ifelse(length(pr)>0, pr/pc_r, 31504/316887918/pc_r)
   
   return(c(pl,pr))
 }
