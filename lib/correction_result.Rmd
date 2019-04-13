@@ -1,0 +1,45 @@
+---
+title: "Correction_Result"
+author: "Jingwen Wang"
+date: "4/12/2019"
+output: html_document
+---
+
+#### Step 0: Load Data Needed
+```{r}
+load("../output/final_prob.RData")
+load('../output/tesseract_vec.RData')
+library(dplyr)
+```
+
+#### Step1: Select the Best Candidate at Each Position
+```{r}
+# Remove NA in ptc:
+final_prob[which(is.na(final_prob$ptc)),]$ptc<- 1e-15
+final_prob = final_prob %>% 
+  mutate(score = pc*ptc*`pl|c`*`pr|c`) %>% 
+  select(typo, correction, posx, posy, score)
+
+first_cand = final_prob %>%
+  group_by(typo, posx, posy) %>%
+  arrange(desc(score)) %>%
+  slice(1)
+```
+
+#### Step2: Apply Correction on the `tesseract_vec`
+```{r}
+corrected_edition = tesseract_vec
+for (i in 1:nrow(first_cand)) {
+  cor = as.character(first_cand[i,]$correction)
+  posx = first_cand[i,]$posx
+  posy = first_cand[i,]$posy
+  corrected_edition[[posx]][posy] = cor
+}
+```
+
+#### Step3: Save Output
+```{r}
+tesseract_vec_new <- corrected_edition
+save(tesseract_vec_new,file = "../output/tesseract_vec_correct.RData")
+```
+
