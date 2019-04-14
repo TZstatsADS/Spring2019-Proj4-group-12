@@ -4,9 +4,6 @@ library(tidyr)
 library(stringr)
 setwd("C:/Users/86155/Documents/GitHub/Spring2019-Proj4-group-12")
 
-## load("~/GitHub/Spring2019-Proj4-group-12/output/ground_truth_all_lines.RData")
-
-#paste(str_trim(gd_lines), sep = " ", collapse = " ")
 ## paste all text
 file_name_vec <- list.files("./data/ground_truth")
 gd_all <- c()
@@ -34,7 +31,6 @@ bigram_counts = bigrams %>%
 
 ## GT turning
 r=table(bigram_counts$freq)
-## r_star=c(r["1"]/316887918)
 r_star = c()
 for (i in 1:(length(r)-1)) {
   r_star = c(r_star,(as.integer(names(r[i]))+1)*r[i+1]/r[i])
