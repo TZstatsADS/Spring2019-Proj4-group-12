@@ -54,7 +54,8 @@ BUT this is not the FOCUS of this project!!!
 
 In this project, we are going to **focus on the third stage -- post-processing**, which includes two tasks: *error detection* and *error correction*.  
 
-# Step 1 - Load library and source code
+# Step 1 - Load library and source code:
+
 ```{r, warning=FALSE, message = FALSE}
 if (!require("devtools")) install.packages("devtools")
 if (!require("pacman")) {
@@ -120,7 +121,6 @@ j-1 # 13 files have unmatched lines
 
 # Name of files that have unmatched lines
 unmatched_file_name[1:j-1]
-
 ```
 
 By examing the line difference, we notice that it is coming from unmatched space line. We can manually adjust this problem, and from now on, we do not have files with unmatched line numbers. From this point, to avoid any confusion, we rename the original file folders into `ground_truth_org` and `tesseract_org`.
@@ -168,9 +168,6 @@ The referenced papers are:
 1. [Rule-based techniques](http://webpages.ursinus.edu/akontostathis/KulpKontostathisFinal.pdf)
 
 - rules are in the section 2.2 
-
-
-In this statercode, we implement the first three rules in the first paper -- rule based techniques, as an example.
 
 ```{r eval=FALSE}
 # store the tesseract_vec into RData
@@ -249,54 +246,149 @@ for(i in 1:length(typo_unique))
   temp <- potential_correction(typo_unique[i])
   candidates <- candidates%>%
     bind_rows(temp)
-  if(i%%100==0)
-  # {print(i)} # This helps to track the process
+  # if(i%%100==0)
+  # {print(i)}  This helps to track the process
 }
 # Note that some of the typos cannot find a meaningful(listed in the dictionary) correction.
 candidates_gd <- candidates
 save(candidates_gd,file='../output/candidates_gd.RData') # possible correction by ground_truth files
 ```
 
-However, in fact that it would be actually better if we are using the matching dictionaries with the confusion matrix to generate the `potential candidates list`. `Associated Press` is the one used in the paper. Therefore, we also generate potential candidates using `Associated Press` as a souce. This dictionary provides with more meaning corrections that suit the everyday use.
+####Step 1: Without Context (Section 3 in assigned paper)
+
+In this step, we are going to calculate $P(c)$ and $P(t|c)$. We use `ground_truth` as the dictionary, combining with the confusion matrix outputed from the paper, to calculate these two probabilities.
 
 ```{r}
-# To keep consistency, we also generated the candidate list that is outputed by using AP dictionary
-load('../output/typos.RData')
-## For each typo, list the candidate
-source('../lib/potential correction ap.R')
-candidates <- data.frame(typo=character(),
-                           correction=character(),
-                           pos=integer(),
-                           change=character(),
-                           type=character(),
-                           stringsAsFactors=FALSE)
+## Step1: Load Frequency Table of Ground Truth
+load("../output/ground_truth_frequency.RData")
+ground_truth_freq$tokens <- as.character(ground_truth_freq$tokens)
 
-# only need to compute the probability for unique typos
-typo_unique <- sapply(typos[,1],tolower)%>%
-  as.vector()%>%
-  gsub('[[:punct:] ]+','',.)%>%
-  as.data.frame(stringsAsFactors=FALSE)%>%
-  distinct()
-
-typo_unique <- typo_unique[typo_unique!="",] # remove empty elements
-num_letter <- sapply(typo_unique,strsplit,split="")%>%
-  sapply(.,length)%>%
-  as.vector()
-typo_unique <- typo_unique[num_letter>1] # remove empty elements and elements that only have one letter
-
-for(i in 1:length(typo_unique))
-{
-  temp <- potential_correction(typo_unique[i])
-  candidates <- candidates%>%
-    bind_rows(temp)
-  if(i%%100==0)
-  {print(i)} # This helps to track the process
+## Step 2: Find the Frequency of Single Character and the Consecutive Two Letters
+chars <- array(0, dim=c(27,26))
+for(i in 1:nrow(ground_truth_freq)){
+  string <- ground_truth_freq$tokens[i]
+  count <- ground_truth_freq$n[i]
+  head <- substring(string,1,1)
+  chars[27,which(letters==head)] =  chars[27,which(letters==head)] + count
+  for (s in 2:nchar(string)) {
+    x = substring(string,s-1, s-1)
+    y = substring(string, s, s)
+    row = which(letters==x)
+    col = which(letters==y)
+    chars[row, col] = chars[row, col] + count
+  }
 }
-# Note that some of the typos cannot find a meaningful(listed in the dictionary) correction.
-candidates_ap <- candidates
-save(candidates_ap,file='../output/candidates.RData') # possible correction by AP
+# Adding names to the character matrix
+# Explanation: the character matrix captures the frequency of a pair of letter showing up in the AP dictionary
+# the last row counts the frequency of a single letter
+colnames(chars)<-letters
+rownames(chars)<-c(letters,"@")
+chars
+save(chars,file='../output/character_bigram_gd.RData')
+
+## Step 3: Importing the Confusion Matrix
+source('../lib/potential_correction_gd.R')
+m_add <- read_csv("../data/confusion_matrix/add_matrix.csv") %>% select(2:27)
+m_del <- read_csv("../data/confusion_matrix/del_matrix.csv") %>% select(2:27)
+m_rev <- read_csv("../data/confusion_matrix/rev_matrix.csv") %>% select(2:27)
+m_sub <- read_csv("../data/confusion_matrix/sub_matrix.csv") %>% select(2:27)
+
+## Step 4: Conditional Probability Calculation
+add_prob <- function(x, y){
+  if(y %in% letters){
+    idx_x <- ifelse(x %in% letters, which(letters==x), 27)
+    idx_y <- which(letters==y)
+    return(m_add[idx_x, idx_y]/sum(chars[idx_x,]))
+  }
+  else return(0)
+}
+
+del_prob <- function(x, y){
+  idx_x <- ifelse(x %in% letters, which(letters==x), 27)
+  idx_y <- which(letters==y)
+  return(m_del[idx_x, idx_y]/chars[idx_x, idx_y])
+}
+
+rev_prob <- function(x, y){
+  idx_x <- which(letters==x)
+  idx_y <- which(letters==y)
+  return(m_rev[idx_x, idx_y]/chars[idx_x, idx_y])
+}
+
+sub_prob <- function(x, y){
+  idx_x <- which(letters==x)
+  idx_y <- which(letters==y)
+  return(m_sub[idx_x, idx_y]/sum(chars[,idx_y]))
+}
+
+## Step 5: Calculate the Prior: pr(c)
+### this is the probability of the correct word appearing in the ground_truth dictionary 
+prior <- function(c){
+  N <- sum(ground_truth_freq[,2])
+  V <- nrow(ground_truth_freq)
+  freq <- ifelse((c %in% ground_truth_freq$tokens),
+                 ground_truth_freq[ground_truth_freq$tokens==c,2],
+                 0)
+  return((freq+0.5)/(N+V/2))
+}
+
+## Step 6: Calculate the conditional (error) probability
+load("../output/candidates_gd.RData")
+prob_t_c_ap <- function(typo){
+  # Input: the wrong word
+  # Output: a data frame contains:
+  ## - typo: the wrong word typed in
+  ## - correction: possible corrections
+  ## - pc: prior probability
+  ## - ptc: error probability
+  list_cand <- potential_correction(typo)
+  correction <- c()
+  scr <- c()
+  pc <- c()
+  for (i in 1:nrow(list_cand)) {
+    cor <- list_cand[i,]$correction
+    typ <- list_cand[i,]$type
+    t <- list_cand[i,]$typo
+    pos <- list_cand[i,]$pos
+    chn <- list_cand[i,]$change
+    
+    if(typ=='i'){
+      s <- as.numeric(ifelse(pos==0, add_prob(NA, chn), add_prob(substring(cor, pos, pos), chn)))
+    }
+    
+    if(typ=='d'){
+      s <- as.numeric(ifelse(pos==0, del_prob(NA, chn), del_prob(substring(cor, pos, pos), chn)))
+    }
+    
+    if(typ=='s'){
+      s <- as.numeric(sub_prob(substring(t, pos+1, pos+1), chn))
+    }
+    
+    if(typ=='r'){
+      s <- as.numeric(rev_prob(substring(cor, pos+1, pos+1), substring(cor, pos+2, pos+2)))
+    }
+    
+    pr <- prior(cor)
+    
+    correction <- c(correction, cor)
+    scr <- c(scr, s)
+    pc <- c(pc, pr)
+  }
+  rk <- data.frame(typo = rep(typo, nrow(list_cand)), correction= correction, pc = pc, ptc = scr) %>% dplyr::arrange(desc(ptc))
+  return(rk)
+}
+
+##Step7: Save Results
+load("../output/candidates_gd.RData")
+unique_cand <- unique(candidates_gd$typo)
+unique_cand_list <- as.list(unique_cand)
+cand_prob_wt_context <- lapply(unique_cand_list, prob_t_c_ap)
+cand_prob_wt_context_df <-ldply(cand_prob_wt_context,data.frame)
+save(cand_prob_wt_context_df,file = "../output/cand_prob_wt_cont_gd.RData")
 ```
-####Step 1: With context
+
+
+####Step 2: With context (Section 5 in assigned paper)
 First, we need to count up the 2-gram in the `ground_truth` files.  
 ```{r}
 ## paste all text
@@ -366,7 +458,6 @@ save(final_prob,file = '../output/final_prob.RData')
 ```
 
 
-
 # Step 5 - Performance measure
 
 The two most common OCR accuracy measures are precision and recall. Both are relative measures of the OCR accuracy because they are computed as ratios of the correct output to the total output (precision) or input (recall). More formally defined,
@@ -430,8 +521,11 @@ OCR_performance_table["character_wise_recall","Tesseract"] <- length(old_interse
 OCR_performance_table["character_wise_precision","Tesseract"] <- length(old_intersect_character)/length(T_character_vec)
 OCR_performance_table["character_wise_recall","Tesseract_with_postprocessing"] <- length(new_intersect_character)/length(GT_character_vec)
 OCR_performance_table["character_wise_precision","Tesseract_with_postprocessing"] <- length(new_intersect_character)/length(T_deleted_character_vec)
+```
 
+Demonstrating Final Result: `Teseeract` vs. `Tesseract_with_postprocessing`:
 
+```{r}
 kable(OCR_performance_table, caption="Summary of OCR performance")
 ```
 
