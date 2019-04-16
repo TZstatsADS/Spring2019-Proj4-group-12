@@ -397,7 +397,7 @@ gd_all <- c()
 for (i in 1:length(file_name_vec)){
   current_file_name <- sub(".txt","",file_name_vec[i])
   gd_lines <- readLines(paste("../data/ground_truth/",current_file_name,".txt",sep=""), warn=FALSE) %>%
-    paste(str_trim(.), sep = " ", collapse = " ")
+  gd_lines <- paste(str_trim(gd_lines), sep = " ", collapse = " ")
   gd_all <- paste(gd_all,gd_lines)
 }
 save(gd_all,file = '../output/gd_all.RData')
