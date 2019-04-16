@@ -96,14 +96,14 @@ for(i in c(1:length(file_name_vec))){
 
 Later, in order to develop the confusion matrix based on `ground_truth files` and to apply the precision measurement, we need to match `ground_truth` and `tesseract`.
 
-```{r}
+```{r, eval=FALSE}
 #set ground_truth file and tesseract file path
 ground_truth_path <- "../data/ground_truth_org/"
 tesseract_text_path <- "../data/tesseract_org/"
 unmatched_file_name <- array("",100)
 ```
 
-```{r}
+```{r, eval=FALSE}
 # Detect if we have files in ground_truth and tesseract that are corresponding to each other but with different line numbers
 j <- 1
 for (i in c(1:length(file_name_vec))){
@@ -125,7 +125,7 @@ unmatched_file_name[1:j-1]
 
 By examing the line difference, we notice that it is coming from unmatched space line. We can manually adjust this problem, and from now on, we do not have files with unmatched line numbers. From this point, to avoid any confusion, we rename the original file folders into `ground_truth_org` and `tesseract_org`.
 
-```{r}
+```{r, eval=FALSE}
 # Remove the line with different length of tokens
 for (i in c(1:length(file_name_vec))){
   ground_truth_docu <- readLines(paste0(ground_truth_path,file_name_vec[i]), warn = FALSE, encoding = "UTF-8")
@@ -216,7 +216,7 @@ The referenced papers are:
 
 Here, we are using `ground_truth` as the dictionary to generate the potential candidates. This `candidates_gd` will be used as the primary source for this on-going project.
 
-```{r}
+```{r, eval=FALSE}
 load('../output/typos.RData')
 ## For each typo, list the candidate
 source('../lib/potential_correction_gd.R')
@@ -258,7 +258,7 @@ save(candidates_gd,file='../output/candidates_gd.RData') # possible correction b
 
 In this step, we are going to calculate $P(c)$ and $P(t|c)$. We use `ground_truth` as the dictionary, combining with the confusion matrix outputed from the paper, to calculate these two probabilities.
 
-```{r}
+```{r, eval=FALSE}
 ## Step1: Load Frequency Table of Ground Truth
 load("../output/ground_truth_frequency.RData")
 ground_truth_freq$tokens <- as.character(ground_truth_freq$tokens)
@@ -390,7 +390,7 @@ save(cand_prob_wt_context_df,file = "../output/cand_prob_wt_cont_gd.RData")
 
 ####Step 2: With context (Section 5 in assigned paper)
 First, we need to count up the 2-gram in the `ground_truth` files.  
-```{r}
+```{r, eval=FALSE}
 ## paste all text
 file_name_vec <- list.files("../data/ground_truth")
 gd_all <- c()
@@ -435,7 +435,7 @@ save(bigram_counts,file = '../output/bigram_counts.RData')
 ```
 
 And then, we will calculate $P(l|c)$ and $P(r|c)$ for each possible corrected word.   
-```{r}
+```{r, eval=FALSE}
 load(../output/cand_prob_wt_cont_gd.RData)
 load(../output/typos.RData)
 source(../lib/get_lr.R)
