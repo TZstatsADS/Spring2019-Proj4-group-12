@@ -6,4 +6,11 @@ The data directory contains data used in the analysis. This is treated as read o
 
 In this project, there are two subfolders -- ground_truth and tesseract. Each folder contains 100 text files with same file names correspondingly.
 
+- `ground_truth_org`: original `ground_truth` folder
+
+- `ground_truth`: same as `original_ground_truth`
+
+- `tesseract_org`: original `tesseract`
+
+- `tesseract_clean_text`: `tesseract` adjusted for matching lines with `ground_truth`
 
