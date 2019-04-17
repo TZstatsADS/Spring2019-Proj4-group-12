@@ -24,7 +24,7 @@ Term: Spring 2019
 + Li, Xuewei:
 + Li, Yuqiao:
 + Wang, Jingwen:
-+ Yang, Zeyu:
++ Yang, Zeyu: Implement the error detection algorithm, generate the possible candidates, compute the prior probability in error correction part, implement the error evaluation
 
 ---
 #### Post-processing Breakdown:
