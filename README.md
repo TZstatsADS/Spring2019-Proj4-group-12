@@ -59,7 +59,7 @@ We identify errors via the following 8 criteria:
 
 ![image](figs/possible_correction.png)
 
-- **Step 3 Calculate $Pr(c)Pr(t|c)$**: P(c) is calculated through `ground_truth` and P(t|c) (typo|correct) is calculated by the word counts in `ground_truth` dictionary and four given confusion matrix in `data`.
+- **Step 3 Calculate Pr(c)Pr(t|c)**: P(c) is calculated through `ground_truth` and P(t|c) (typo|correct) is calculated by the word counts in `ground_truth` dictionary and four given confusion matrix in `data`.
 
 ![image](figs/section_3.png)
 
@@ -69,7 +69,7 @@ We identify errors via the following 8 criteria:
 ![image](figs/section_5.png)
 
 
-- **Score: Pr(c) x Pr(t|c) x Pr(l|c) x Pr(r|c)**: previously we extract the position of each typo. After we calculate the score for each (typo,candidate,typo_position), we select the correction with the highest score, and we insert this corrected word back to `tesseract_vec`.
+- **Score: Pr(c) x Pr(t|c) x Pr(l|c) x Pr(r|c)**: previously we extract the position of each typo. After we calculate the score for each (typo,candidate,typo position), we select the correction with the highest score, and we insert this corrected word back to `tesseract_vec`.
 
 #### Algorithm Evaluation:
 
