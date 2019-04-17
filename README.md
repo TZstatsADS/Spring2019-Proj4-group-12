@@ -66,7 +66,7 @@ We identify errors via the following 8 criteria:
 ![image](figs/section_3.png)
 
 
-- **Step 4 Calculate $Pr(l|c)Pr(r|c)$**: The Section 5 in this paper discusses about how contextual concerns would help to increase the accuracy. Here we use bigram model (i.e. two consecutive words in a line), and we calculate Pr(l|c) and Pr(r|c) using Good-Tuning Estimation.
+- **Step 4 Calculate Pr(l|c)Pr(r|c)**: The Section 5 in this paper discusses about how contextual concerns would help to increase the accuracy. Here we use bigram model (i.e. two consecutive words in a line), and we calculate Pr(l|c) and Pr(r|c) using Good-Tuning Estimation.
 
 ![image](figs/section_5.png)
 
