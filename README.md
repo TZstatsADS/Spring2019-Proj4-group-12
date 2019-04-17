@@ -23,7 +23,7 @@ Term: Spring 2019
 
 + Li, Xuewei:
 + Li, Yuqiao:
-+ Wang, Jingwen:
++ Wang, Jingwen: Complete the algorithm of probability scoring without context. Writhe the algorithm to conduct the final scoring and to apply the correction on `tesseract_vec`. Worked on presentation (presenter assigned) and write the `ReadMe` of this project.
 + Yang, Zeyu: Implement the error detection algorithm, generate the possible candidates, compute the prior probability in error correction part, implement the error evaluation
 
 ---
