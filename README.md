@@ -59,17 +59,17 @@ We identify errors via the following 8 criteria:
 
 ![image](figs/possible_correction.png)
 
-- **Step 3 Calculate $Pr(c)Pr(t|c)$**: $P(c)$ is calculated through `ground_truth` and $P(t|c)$ (typo|correct) is calculated by the word counts in `ground_truth` dictionary and four given confusion matrix in `data`.
+- **Step 3 Calculate $Pr(c)Pr(t|c)$**: P(c) is calculated through `ground_truth` and P(t|c) (typo|correct) is calculated by the word counts in `ground_truth` dictionary and four given confusion matrix in `data`.
 
 ![image](figs/section_3.png)
 
 
-- **Step 4 Calculate $Pr(l|c)Pr(r|c)$**: The Section 5 in this paper discusses about how contextual concerns would help to increase the accuracy. Here we use bigram model (i.e. two consecutive words in a line), and we calculate $Pr(l|c)$ and $Pr(r|c)$ using Good-Tuning Estimation.
+- **Step 4 Calculate $Pr(l|c)Pr(r|c)$**: The Section 5 in this paper discusses about how contextual concerns would help to increase the accuracy. Here we use bigram model (i.e. two consecutive words in a line), and we calculate Pr(l|c) and Pr(r|c) using Good-Tuning Estimation.
 
 ![image](figs/section_5.png)
 
 
-- **Score: $Pr(c) \times Pr(t|c) \times Pr(l|c) \times Pr(r|c)$**: previously we extract the position of each typo. After we calculate the score for each $(typo,candidate,typo_position)$, we select the correction with the highest score, and we insert this corrected word back to `tesseract_vec`.
+- **Score: Pr(c) x Pr(t|c) x Pr(l|c) x Pr(r|c)**: previously we extract the position of each typo. After we calculate the score for each (typo,candidate,typo_position), we select the correction with the highest score, and we insert this corrected word back to `tesseract_vec`.
 
 #### Algorithm Evaluation:
 
