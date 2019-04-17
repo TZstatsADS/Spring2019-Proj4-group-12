@@ -30,6 +30,7 @@ Term: Spring 2019
 #### Post-processing Breakdown:
 
 **Error Detection: Rule-based Technique**
+
 <em>Assigned Paper: D1</em>
 
 We identify errors via the following 8 criteria:
