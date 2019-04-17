@@ -75,7 +75,7 @@ We identify errors via the following 8 criteria:
 
 ![image](figs/result.png)
 
-We measure the algorithm based on word-wise precision, word-wise recall, character-wise precision, and character-wise recall. From the word-wise perspective, the post-processing algorithm helps to increase both recall and precision by approximately $1.5%$. From the character-wise perspective, our algorithm increases the recall by $1%$, while it only increases the precision by around $0.2%$. 
+We measure the algorithm based on word-wise precision, word-wise recall, character-wise precision, and character-wise recall. From the word-wise perspective, the post-processing algorithm helps to increase both recall and precision by approximately 1.5%. From the character-wise perspective, our algorithm increases the recall by 1%, while it only increases the precision by around 0.2%. 
 
 Taking both results from the word-wise level and character-wise level into consideration, we finds that our algorithm works better with `the ground_truth` than with the `OCR output`. It, to some extent, suggests that this algorithm depends on the dictionary that we are using. 
 
