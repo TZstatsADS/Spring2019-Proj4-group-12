@@ -4,10 +4,6 @@
 
 ### [Full Project Description](doc/project4_desc.md)
 
-<style>
-body {
-text-align: justify}
-</style>
 
 Term: Spring 2019
 
