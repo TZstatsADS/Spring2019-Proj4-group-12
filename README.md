@@ -22,7 +22,7 @@ Term: Spring 2019
 **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
 
 + Li, Xuewei: Complete the algorithm of probability scoring with context and apply Good-Turing method. Debug the error evaluation part.
-+ Li, Yuqiao: Discuss and complete the algorithm of probability scoring with context.
++ Li, Yuqiao: Discuss method of cleaning text. Apply bigram to text and complete the algorithm of probability scoring with context.
 + Wang, Jingwen: Complete the algorithm of probability scoring without context. Write the algorithm to conduct the final scoring and to apply the correction on `tesseract_vec`. Worked on presentation (presenter assigned) and write the `ReadMe` of this project.
 + Yang, Zeyu: Implement the error detection algorithm, generate the possible candidates, compute the prior probability in error correction part, implement the error evaluation
 
