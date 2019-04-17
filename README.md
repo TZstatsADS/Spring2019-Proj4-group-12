@@ -27,7 +27,7 @@ Term: Spring 2019
 + Yang, Zeyu:
 
 ---
-####Post-processing Breakdown:
+#### Post-processing Breakdown:
 
 **Error Detection: Rule-based Technique**
 
@@ -71,7 +71,7 @@ We identify errors via the following 8 criteria:
 
 - **Score: $Pr(c) \times Pr(t|c) \times Pr(l|c) \times Pr(r|c)$**: previously we extract the position of each typo. After we calculate the score for each $(typo,candidate,typo_position)$, we select the correction with the highest score, and we insert this corrected word back to `tesseract_vec`.
 
-####Algorithm Evaluation:
+#### Algorithm Evaluation:
 
 ![image](figs/result.png)
 
